@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--Define the versions of IE that will be used to render the page. See Microsoft documentation for details. Optional.-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!-- End Responsive -->
+    <meta property="og:url"                content="https://livingatlas.arcgis.com/topoexplorer/index.html" />
+    <meta property="og:type"               content="application" />
+    <meta property="og:title"              content="Esri Topo Explorer" />
+    <meta property="og:description"        content="The USGS Historical Topographic Map Explorer brings the rich tapestry of US historical maps to everyone, and it allows them to share views of the collection as a web maps." />
+    <meta property="og:image"              content="https://images.safe.com/logos/partners/esri.png" />
+    <!-- SEO -->
+    <meta name="Keywords" content="USGS, Topographic Maps, Historical Maps, Map, Esri"/>
+    <meta name="Description" content="This interactive map..."/>
+
+    <link rel="icon" href="https://topotijdreis.nl/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="css/themes/tooltipster-shadow.css"/>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.33/esri/css/esri.css"/>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.27/dijit/themes/nihilo/nihilo.css">
+    <link rel="stylesheet" type="text/css" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.4/css/calcite-web.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+
+</head>
+
+<body class="nihilo">
+<!-- main window -->
+<div id="main-window" data-dojo-type="dijit.layout.BorderContainer"
+     data-dojo-props="design:'headline', liveSplitters:true, gutters:false">
+
+    <!-- header -->
+    <div class="header" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'top'">
+          <!-- header -->
+        <div class="header-title"></div>
+        <div class="subheader-title"></div>
+        <div class="header_replacement"></div>
+        <a href="https://www.kadaster.nl/" target="_blank">
+            <img class="header-replacement" src="images/header.svg">
+        </a>
+
+                <div class="right social">
+                    <span class="share_facebook icon-social-facebook"></span>
+                    <span class="share_twitter icon-social-twitter"></span>
+                    <span class="share_bitly icon-social-share" id="bitlyIcon" title="Get a short link to the application"></span>
+                    <span class="padding-left-quarter padding-right-0 padding-leader-0 padding-trailer-0 btn btn-small btn-transparent icon-ui-gray about-modal icon-ui-description font-size-1"></span>
+
+                    <div class="popover fade left in" data-toggle="popover" data-placement="left" style="display: none;">
+                        <div class="arrow"></div>
+                        <div class="popover-content" id="bitlyContent">
+                            <div class="bitlyInputContainer">
+                                <input id="bitlyInput" class="bitlyInput" type="text" value="">
+                            </div>
+                            <div class="copy-btn icon-ui-link btn btn-small btn-white btn-clear">Copy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    <!-- sidebar container -->
+    <div class="sidebar" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'left'">
+        <!-- STEP ONE -->
+        <div class="step-one-message-container">
+            <div class="halfCircleRight stepOne step-one-half-circle-msg"></div>
+            <div class="step-one-message"></div>
+        </div>
+
+        <div class="geocoder-container">
+            <div id="geocoder"></div>
+        </div>
+
+        <!-- STEP TWO -->
+        <div class="step-two-message-container hide">
+            <div class="halfCircleRight stepTwo step-two-half-circle-msg"></div>
+            <div class="step-two-message"></div>
+        </div>
+
+        <!-- STEP THREE -->
+        <div class="step-three-message-container hide">
+            <div class="halfCircleRight stepThree step-three-half-circle-msg"></div>
+            <!-- STEP THREE -->
+            <div class="step-three-message"></div>
+        </div>
+
+        <!-- sign in / sign out -->
+        <div class="step-four-message-container hide">
+            <div class="step-four-message">
+                <div class="font-size--2 sign-in-message text-center hide">
+                    <div class="save-maps-container">
+                        <span class='sign-in-btn avenir-demi btn btn-transparent padding-leader-0 padding-trailer-0 padding-left-0 padding-right-0'>Log in</span>
+                        <span> om kaarten op te slaan in uw ArcGIS Online account</span>
+                    </div>
+                </div>
+                <div class="font-size--2 save-maps-message hide">
+                    <div class="save-maps-container">
+                        <div class="left-col">
+                            <img class="user-thumbnail" src="images/profile-pictures.png">
+                            <div class="user-name text-ellipsis"></div>
+                        </div>
+                        <div class="right-col">
+                            <span class='save-maps-btn avenir-demi btn btn-transparent padding-leader-0 padding-trailer-0 padding-left-0 padding-right-0'>Sla kaartlaag op</span>
+                            <span> in uw ArcGIS Online account</span>
+                            <div class="sign-out-btn">Log uit</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRID CONTAINER / STEP THREE / GRID -->
+        <div class="gridContainer">
+            <div id="grid"></div>
+        </div>
+
+        <div class="reset-btn btn btn-small btn-white icon-ui-refresh">Resetten</div>
+    </div>
+
+    <!-- map container -->
+    <div id="map" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'center', splitter:true">
+        <img id="loadingImg" src="images/loading.gif"/>
+    </div>
+
+    <!-- timeline container -->
+    <div id="timeline-container" data-dojo-type="dijit.layout.ContentPane"
+         data-dojo-props="region:'bottom', splitter:true">
+        <!-- timeline legend -->
+        <div class="timeline-legend-container">
+            <div class="timeline-legend-header"></div>
+            <div class="btn-group btn-group-vertical topo-legend" data-toggle="buttons"></div>
+        </div>
+        <div class="timeline-message"></div>
+        <!-- timeline -->
+        <div id="timeline"></div>
+    </div>
+
+    <!-- about modal -->
+    <div class="js-modal modal-overlay " data-modal="foo">
+        <div class="modal-content column-18" role="dialog" aria-labelledby="modal" role="dialog">
+
+            <a class="js-modal-toggle right" href="#" aria-label="close-modal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 32 32" class="svg-icon"><path d="M18.404 16l9.9 9.9-2.404 2.404-9.9-9.9-9.9 9.9L3.696 25.9l9.9-9.9-9.9-9.898L6.1 3.698l9.9 9.899 9.9-9.9 2.404 2.406-9.9 9.898z"/></svg>
+            </a>
+
+            <h3 class='trailer-half font-size-3'><b>Over meer dan 200 jaar topografie en luchtfoto's</b></h3>
+            <p>
+              <b>Topografische kaarten</b>
+            </p>
+            <p>
+                  Op 18 februari 1815 werd het Topographisch Bureau opgericht.
+                  Sinds die datum verzamelt en ontsluit de Nederlandse overheid geografische informatie: bijvoorbeeld over de ligging van wegen, water, bebouwing en landbouwgrond.
+                  Later ging het Bureau verder onder de naam Topografische Dienst.
+                  In 2004 werd de Dienst onderdeel van het Kadaster.</br>
+                  </br>
+                  Hiermee haalde het Kadaster jarenlange ervaring met het verzamelen van geo-informatie in huis.
+                  Een resultaat om trots op te zijn: meer dan 200 jaar topografische kaarten van topniveau.
+                  Om dit niveau te behouden investeren we in innovaties, waar mogelijk in samenwerking met overheden, het bedrijfsleven en de wetenschap.
+                  Door nieuwe methoden en technieken hebben gebruikers nog meer plezier van onze kaarten.
+                  Deze zijn actueler dan ooit.</br>
+                </br>
+                  Om 200 jaar topografie te vieren is deze tijdreis-app gemaakt. Ontdek met de app meer dan 200 jaar aan topografische gegevens van nederland! Deze app bevat sinds 2020 ook luchtfoto's.
+                  </p>
+                  <p>
+              <b>Luchtfoto's</b>
+            </p>
+            <p>
+                  Sinds 1927 worden topografische kaarten gemaakt met behulp van luchtfoto's, dat zijn foto’s vanuit een vliegtuig loodrecht naar beneden.
+                  Vanaf die tijd zijn er van Nederland luchtfoto's beschikbaar.
+                  De luchtfoto’s zijn in het begin om de 10 jaar opgenomen, vanaf 1981 is Nederland met wisselende intervallen per regio, vaker gefotografeerd.</br>
+                  </br>
+                  Zo zijn in de loop der jaren meerdere volledige bedekkingen van Nederland ontstaan, waarvan jaarlijks delen worden vernieuwd.
+                  Vanaf 2008 is begonnen met het maken van digitale luchtfoto’s van (delen van) Nederland.
+                  Voor 2008 zijn analoge luchtfoto’s via scannen digitaal gemaakt.</br>
+                  </br>
+                    In Topotijdreis zijn momenteel alleen de digitale	 luchtfoto’s opgenomen vanaf het eerste jaar dat de bedekking van Nederland digitaal compleet is, en dat is 2006.</br>
+                    </br>
+                    De luchtfoto’s zijn vervaardigd op een schaal van ongeveer 1:18.000 en beslaan een gebied van circa 4 x 4 km.
+                    Alle luchtfoto’s zijn loodrecht naar beneden genomen, t/m 2006 in zwart/wit en vanaf 2007 zijn de luchtfoto's opgenomen in kleur.
+                    </p>
+                    <p>
+                      <b>Disclaimer</b>
+                    </p>
+                    <p>
+                        Topotijdreis met luchtfoto’s is met grote zorg opgebouwd uit gedigitaliseerde en geogerefereerde historische kaarten en luchtfoto's.
+                        Toch kunnen er nog onvolkomenheden voorkomen.</br>
+                        </br>
+                        <a href="http://www.topotijdreis.nl/images/Algemene_voorwaarden_en_privacy.pdf" target="_blank"> Algemene voorwaarden & Privacy
+                      </a>
+                    </p>
+
+            <div class="font-size-2">
+                <b>Veelgestelde vragen</b>
+            </div>
+            <p>
+                </br>
+                <b>Vraag:</b> In welke browser kan ik de app het beste bekijken? 	</br>
+                </br>
+                Gebruik de meest recente versie van uw browser. De app werkt het beste in Google Chrome en Mozilla Firefox.</br>
+                </br>
+                <b>Vraag:</b> Kaarten uit de beginperiode liggen verschoven ten opzichte van de moderne topografie, hoe kan dat? 	</br>
+                </br>
+                Door de eenvoudige projectie die destijds is toegepast bij de oorspronkelijke vervaardiging van de Kraijenhoff-kaart en de Postroutekaart uit 1815 is er geen sprake van een constante schaal. De schaal is wel verbeterd bij de digitale inpassing van de kaarten maar het kaartbeeld is niet beter te corrigeren.</br>
+                </br>
+                <b>Vraag:</b> Welke kaarten zie ik in deze app? 	</br>
+                </br>
+                De collectie beslaat de periode 1815-heden en bevat meerdere edities van de volgende kaartseries:</p>
+                  <ul style="list-style-type: circle;">
+                  <li>Kleinschalig: Postroutekaart 1810, Algemene Kaart Nederland en Gemeentekaart</li>
+                  <li>Semi-kleinschalig: Kraijenhoffkaart</li>
+                  <li>Mid-schalig: Topografische Militaire Kaart, RD050 (1:50.000)</li>
+                  <li>Grootschalig: Bonnebladen en RD025 (1:25.000)</li>
+                </ul>
+                <p>
+                <b>Vraag:</b> Op welke schaal zijn de kaarten zichtbaar en welke kaartprojectie is gebruikt? 	</br>
+                </br>
+                De kaarten zijn opgebouwd uit meerdere kaartschalen en tonen gegevens conform het Nederlands tiling schema op de schalen 1:12.288.000 (level 0) t/m 1:6.000 (level 11). De gebruikte kaartprojectie is het Rijksdriehoekstelsel.</br>
+                </br>
+                <b>Vraag:</b> Waarom zie ik soms geen verschil in het kaartbeeld wanneer ik wissel tussen jaren? 	</br>
+                </br>
+                Dit komt omdat er voor die gebieden dan geen nieuwe kaarten zijn gemaakt. De kaart van een specifiek jaar laat de historische topografische data zien die tot op dat jaar actueel beschikbaar waren. Dit kan betekenen dat er gedurende meerdere jaren geen verschil in de kaart waarneembaar is.</br>
+                </br>
+                <b>Vraag:</b> Waarom zijn bepaalde kaarten verschillend van kleur? 	</br>
+                </br>
+                Destijds waren er verschillende drukkers om de topografische kaarten te printen. Zij hadden een eigen productieproces en manier van opslaan. Dit verklaart het kleurverschil.</br>
+                </br>
+                <b>Vraag:</b> Welke jaargangen van kaarten zijn beschikbaar? (tijdlijn is een indicatie van de periode).</br>
+                </br>
+                Van circa 1815 t/m nu. Klik in de balk om te zien welke jaargangen van een kaart beschikbaar zijn.</br>
+                </br>
+                <b>Vraag:</b> Zijn alle kaarten in kleur?</br>
+                </br>
+                Nee, per gebied en jaartal kan dit variëren. Dit heeft te maken met het doel waar de kaart voor gemaakt werd/wordt.</br>
+                </br>
+                <b>Vraag:</b> Is er bij een kaart ook een legenda beschikbaar?</br>
+                </br>
+                Nee, hiervoor moet u een bestelling plaatsen. Dit kan via deze link:</br>
+                </br>
+                <a href="https://www.kadaster.nl/historische-kaarten" target="_blank"> https://www.kadaster.nl/historische-kaarten</a></br>
+                </br>
+                <b>Vraag:</b> Kan ik een kaart ook downloaden als een PDF-bestand?</br>
+                </br>
+                Nee, wel kunt u een kaart bestellen via deze link:</br>
+                </br>
+                <a href="https://www.kadaster.nl/historische-kaarten" target="_blank"> https://www.kadaster.nl/historische-kaarten</a></br>
+                </br>
+                <b>Vraag:</b> Staan er ook kadastrale grenzen op kaarten?</br>
+                </br>
+                Nee, alleen de topografie wordt weergegeven. Wilt u een kaart met kadastrale grenzen dan kunt u een kadastrale kaart opvragen via deze link:</br>
+                </br>
+                <a href="https://www.kadaster.nl/-/kadastrale-kaart" target="_blank"> https://www.kadaster.nl/-/kadastrale-kaart</a></br>
+                </br>
+                <b>Vraag:</b> Waarom geven verschillende kaartschalen, verschillende informatie?</br>
+                </br>
+                Op een kaart met grote schaal kunnen meer gegevens en meer details afgedrukt worden dan op een kaart met een kleinere schaal. Voorbeeld 1:25.000 grote schaal en 1:100.000 kleine schaal.</br>
+                </br>
+                <b>Vraag:</b> Waarom klopt de informatie op de kaart niet met de werkelijkheid? Mijn huis staat niet juist weergegeven.</br>
+                </br>
+                Er zit een periode tussen de werkelijke opname en de feitelijke uitgave waarin de kaart is gemaakt.</br>
+                </br>
+                <b>Vraag:</b> Zijn er ook kaarten aanwezig van voor 1815?</br>
+                </br>
+                Nee, voor die tijd bestond er nog geen topografische dienst. Er zijn wel topografische kaarten maar die zijn regionaal beschikbaar. Via het Nationaal archief, dit kan per gemeente, provincie verschillen.</br>
+                </br>
+                <b>Vraag:</b> Mag ik een print-screen maken van een kaart en dit publiceren?</br>
+                </br>
+                U mag de website topotijdreis niet commercieel gebruiken. Het volgende is niet toegestaan:</p>
+                <ul style="list-style-type: circle;">
+                  <li> Het vragen van betaling en/of registratie voor toegang</li>
+                  <li> Het toe- of invoegen van reclame-uitingen</li>
+                  <li> Logo’s of andere content (al dan niet via layers, pop-ups en dergelijke)</li>
+                  <li> Het creëren van additionele functionaliteiten en afgeleide diensten</li>
+                </ul>
+                <p>
+                  Overig gebruik is alleen toegestaan als daarvoor voorafgaande schriftelijke toestemming van het Kadaster is verkregen.</br>
+                </br>
+                <b>Vraag:</b> Waarom zie ik vliegvelden en kazernes niet op oudere kaarten?</br>
+                </br>
+                In een bepaalde periode viel dit onder geclassificeerd gebied en mocht niet weergegeven worden. Dit werd witgelaten of met een fantasie (grasvelden, slootjes) gebied weergegeven.</br>
+                </br>
+                <b>Vraag:</b> Waarom is een gebouw op een kaart niet zichtbaar in het jaar van uitgiften?</br>
+                </br>
+                De kaarten worden gemaakt op basis van de luchtfoto en daar zit een paar jaar tussen (kan oplopen tot 5 jaar).</br>
+                </br>
+                <b>Vraag:</b> Zijn er luchtfoto's van voor 2006 beschikbaar?</br>
+                </br>
+                Er zijn analoge luchtfoto's vanaf 1927 beschikbaar, zie de website:</br>
+                </br>
+                  <a href="https://www.kadaster.nl/producten/kaarten-en-luchtfoto-s/historisch/luchtfoto-s" target="_blank"> https://www.kadaster.nl/producten/kaarten-en-luchtfoto-s/historisch/luchtfoto-s</a></br>
+                </br>
+                <b>Vraag:</b> Hoe goed zijn details op de foto's te onderscheiden?</br>
+                </br>
+                Vanaf 2006 zijn de luchtfoto’s digitaal beschikbaar en daarom makkelijk in Topotijdreis op te nemen. Voor 2006 is (een groot deel van) Nederland alleen met analoge luchtfoto’s opgenomen. Deze zijn niet geschikt voor opname in Topotijdreis.</br>
+                </br>
+                <b>Vraag:</b> Hoe kun je het beste navigeren in de luchtfoto?</br>
+                </br>
+                In de luchtfoto’s staan geen namen ed. Het kan daarom lastig zijn om in de luchtfoto de gewenste locatie te vinden. Het makkelijkste is om op de kaart in Topotijdreis je locatie te zoeken en dan via de knop over te schakelen naar de luchtfoto.</br>
+                </br>
+                <b>Vraag:</b> Waarom hebben de kaart en de luchtfoto niet dezelfde tijdsbalk?</br>
+                </br>
+                Luchtfoto’s zijn niet voor ieder jaar beschikbaar en de nieuwe luchtfoto’s en de nieuwe topografische kaart kunnen op verschillende tijdstippen beschikbaar komen.</br>
+                </br>
+                <b>Vraag:</b> Waarom bevatten de kaart en de luchtfoto van hetzelfde jaartal niet dezelfde informatie? / Waarom zie ik wel iets op de luchtfoto, maar niet op de topografische kaart?</br>
+                </br>
+                De luchtfoto’s worden gebruikt als bron voor het actualiseren van de topografische kaarten. Vanwege de doorlooptijd van de processen rondom luchtfoto’s en topografische kaarten zijn de topografische kaarten meestal gebaseerd op de luchtfoto’s van het jaar ervoor. Als voorbeeld: De topografische kaarten uit 2019 zijn gebaseerd op luchtfoto’s uit 2018.</br>
+                </br>
+                </p>
+
+            <div class="text-right">
+                <button class="btn btn-white js-modal-toggle">Venster sluiten</button>
+            </div>
+        </div>
+    </div>
+
+    <a class="foo-modal js-modal-toggle btn hide" href="#" data-modal="foo"><span></span></a>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.4/js/calcite-web.min.js"></script>
+<script type="text/javascript" src="https://js.arcgis.com/3.33/"></script>
+<script type="text/javascript" src="js/config.js"></script>
+<script type="text/javascript" src="js/tooltip-min.js"></script>
+<script type="text/javascript" src="js/tmin.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="https://assets.adobedtm.com/2e9cd01e19dc5ac4867e752f17a2f1ea1923e5af/satelliteLib-0ed1001fd441a838aefe8e755be42aaafddcc46b.js"></script>
+</body>
+</html>
