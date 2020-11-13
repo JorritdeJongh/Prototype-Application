@@ -546,9 +546,9 @@ require([
                 q.where = Config.QUERY_WHERE;
             }
             if (Config.QUERY_GEOMETRY === "MAP_POINT") {
-                q.geometry = mp;new SpatialReference({
-                  wkid: 28992
-                })
+                q.geometry = mp;//new SpatialReference({
+                //  wkid: 28992
+              //  })
             } else {
                 q.geometry = mapExtent.expand(Config.EXTENT_EXPAND);
             }
@@ -632,22 +632,26 @@ require([
             if (esriLang.isDefined(urlQueryObject)) {
                 if (esriLang.isDefined(urlQueryObject.selLat) && esriLang.isDefined(urlQueryObject.selLng)) {
                     if (urlQueryObject.selLat !== "" && urlQueryObject.selLng !== "") {
-                        var selLat = urlQueryObject.selLat;new SpatialReference({
-                          wkid: 28992
-                        })
-                        var selLng = urlQueryObject.selLng;new SpatialReference({
-                          wkid: 28992
-                        })
-                        var mp = new Point([selLat, selLng], new SpatialReference({
-                            wkid: 28992
-                        }));
+                        var selLat = urlQueryObject.selLat;
+                        //new SpatialReference({
+                          //wkid: 28992
+                      //  })
+                        var selLng = urlQueryObject.selLng;
+                        //new SpatialReference({
+                        //  wkid: 28992
+                    //    })
+                        var mp = new Point([selLat, selLng],
+                          //new SpatialReference({
+                          //  wkid: 28992
+                        });
                         // add crosshair
                         addCrosshair(mp);
                         currentMapClickPoint = mp;
                         currentLOD = map.getLevel();
-                        currentMapExtent = map.extent;new SpatialReference({
-                          wkid: 28992
-                        })
+                        currentMapExtent = map.extent;
+                        //new SpatialReference({
+                      //    wkid: 28992
+                    //    })
 
                         if (urlQueryObject.oids.length > 0) {
                             var qt = new QueryTask(Config.IMAGE_SERVER);
@@ -656,13 +660,15 @@ require([
                             q.outFields = Config.OUTFIELDS;
                             q.spatialRelationship = Query.SPATIAL_REL_INTERSECTS;
                             if (Config.QUERY_GEOMETRY === "MAP_POINT") {
-                                q.geometry = currentMapClickPoint;new SpatialReference({
-                                  wkid: 28992
-                                })
+                                q.geometry = currentMapClickPoint;
+                                //new SpatialReference({
+                                  ///: 28992
+                            //    })
                             } else {
-                                q.geometry = currentMapExtent.expand(Config.EXTENT_EXPAND);new SpatialReference({
-                                  wkid: 28992
-                                })
+                                q.geometry = currentMapExtent.expand(Config.EXTENT_EXPAND);
+                                //new SpatialReference({
+                                  //wkid: 28992
+                            //    })
                             }
 
                             var deferreds = [];
@@ -901,9 +907,10 @@ require([
                         ymin = data.ymin;
                         ymax = data.ymax;
                     }
-                    extent = new Extent(xmin, ymin, xmax, ymax, new SpatialReference({
-                        wkid: 28992
-                    }));
+                    extent = new Extent(xmin, ymin, xmax, ymax);
+                      //new SpatialReference({
+                      //  wkid: 28992
+                  //  }));
                     sfs = sfs = createMouseOverGraphic(
                         new Color(Config.TIMELINE_ITEM_MOUSEOVER_GR_BORDER),
                         new Color(Config.TIMELINE_ITEM_MOUSEOVER_GR_FILL));
@@ -941,8 +948,9 @@ require([
                         q.outFields = Config.OUTFIELDS;
                         q.where = whereClause;
                         queryTask.execute(q, function (rs) {
-                            var extent = rs.features[0].geometry.getExtent();new SpatialReference({
-                              wkid: 28992
+                            var extent = rs.features[0].geometry.getExtent();
+                            //new SpatialReference({
+                              //wkid: 28992
                             })
                             var mapName = rs.features[0].attributes.Map_Name;
                             var dateCurrent = rs.features[0].attributes.DateCurrent;
@@ -1296,12 +1304,14 @@ require([
                 map = response.map;
 
                 on(map, "load", mapLoadedHandler);
-                on(map, "click", mapClickHandler);new SpatialReference({
-                  wkid: 28992
-                })
-                on(map, "extent-change", extentChangeHandler);new SpatialReference({
-                  wkid: 28992
-                })
+                on(map, "click", mapClickHandler);
+                //new SpatialReference({
+                //  wkid: 28992
+            //    })
+                on(map, "extent-change", extentChangeHandler);
+                //new SpatialReference({
+                //  wkid: 28992
+              //  })
                 on(map, "update-start", showLoadingIndicator);
                 on(map, "update-end", hideLoadingIndicator);
 
@@ -1328,9 +1338,10 @@ require([
         function mapClickHandler(evt) {
             console.debug("mapClickHandler")
             var crosshairSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CROSS, Config.CROSSHAIR_SIZE, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color(Config.CROSSHAIR_FILL_COLOR), Config.CROSSHAIR_OPACITY));
-            currentMapClickPoint = evt.mapPoint;new SpatialReference({
-              wkid: 28992
-            })
+            currentMapClickPoint = evt.mapPoint;
+            //new SpatialReference({
+            //  wkid: 28992
+          //  })
             currentLOD = map.getLevel();
             if (crosshairGraphic) {
                 map.graphics.remove(crosshairGraphic);

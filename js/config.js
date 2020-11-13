@@ -111,42 +111,55 @@ var Config = {
 1:768,000 - 1:12,288,000
      *
      **************************************************************************/
-    /* container background color */
-    "TIMELINE_CONTAINER_BACKGROUND_COLOR": "rgba(117, 179, 198, 0.16)",
-    /* legend header */
-    "TIMELINE_LEGEND_HEADER": "Schaal historische kaarten",
+     /* container background color */
+     "TIMELINE_CONTAINER_BACKGROUND_COLOR": "rgba(224, 237, 228, 0.55)",
+     /* legend header */
+     "TIMELINE_LEGEND_HEADER": "Historical Map Scales",
 
-    "TIMELINE_LEGEND_VALUES": [
-        {
-            "label": "1:768 000",
-            "value": 768000,
-            "color": "rgb(0, 78, 215)",
-            "className": "four",
-            "lodThreshold": 7
-        },
-        {
-            "label": "1:192 000",
-            "value": 192000,
-            "color": "rgb(0, 117, 196)",
-            "className": "three",
-            "lodThreshold": 9
-        },
-        {
-            "label": "1:48 000",
-            "value": 48000,
-            "color": "rgb(0, 156, 176)",
-            "className": "two",
-            "lodThreshold": 10
-        },
-        {
-            "label": "1:6,000",
-            "value": 6000,
-            "color": "rgb(0, 196, 157)",
-            "className": "one",
-            "lodThreshold": 11
-        },
-    ],
-
+     "TIMELINE_LEGEND_VALUES": [
+         {
+             "label": "50,000",
+             "value": 50000,
+             "color": "rgb(0, 78, 215)",
+             "className": "six",
+             "lodThreshold": 1
+         },
+         {
+             "label": "40000",
+             "value": 40000,
+             "color": "rgb(0, 117, 196)",
+             "className": "five",
+             "lodThreshold": 1
+         },
+         {
+             "label": "25000",
+             "value": 25000,
+             "color": "rgb(0, 156, 176)",
+             "className": "four",
+             "lodThreshold": 1
+         },
+         {
+             "label": "10000",
+             "value": 10000,
+             "color": "rgb(0, 196, 157)",
+             "className": "three",
+             "lodThreshold": 1
+         },
+         {
+             "label": "5000",
+             "value": 5000,
+             "color": "rgb(0, 235, 137)",
+             "className": "two",
+             "lodThreshold": 1
+         },
+         {
+             "label": "2500",
+             "value": 2500,
+             "color": "rgb(0, 235, 137)",
+             "className": "one",
+             "lodThreshold": 1
+         }
+     ],
     /* Timeline disabled message (Msg displayed when user zooms too far out) */
     "TIMELINE_DISABLED_MESSAGE": "Zoom verder in op de kaart om de tijdlijn weer te geven",
     "TIMELINE_DISABLED_BACKGROUND_COLOR": "#007395",
