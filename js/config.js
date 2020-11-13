@@ -82,7 +82,7 @@ var Config = {
     //https://geo.javawa.nl/zoeken/ *\
     "BASEMAP_INIT_X": 154929,
     "BASEMAP_INIT_Y": 463011,
-    "BASEMAP_INIT_ZOOM": 8,
+    "BASEMAP_INIT_ZOOM": 6,
 
 
     /**************************************************************************
