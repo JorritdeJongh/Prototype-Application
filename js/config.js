@@ -195,7 +195,7 @@ var Config = {
     "IMAGE_SERVER_JSON": "?culture=en&f=json&token=",
 
     /* Image service */
-    "IMAGE_SERVER": "https://edemo6.esri.nl/server/rest/services/Topotijdreis/Nijmegen_Map_Image_Test/MapServer",
+    "IMAGE_SERVER": "https://edemo6.esri.nl/server/rest/services/Topotijdreis/Nijmegen_Historic_Maps/ImageServer",
     /* outfields */
     "OUTFIELDS": ['*'],
     /* WHERE clause */
@@ -213,17 +213,17 @@ var Config = {
     /* OBJECTID -- DO NOT modify this field --- */
     "ATTRIBUTE_OBJECTID": "OBJECTID",
     /* Name of map displayed */
-    "ATTRIBUTE_MAP_NAME": "Name",
+    "ATTRIBUTE_MAP_NAME": "Map_Name",
     /* Date field (UTC format) */
-    "ATTRIBUTE_DATE": "",
+    "ATTRIBUTE_DATE": "Prod_Date",
     /* Scale field */
-    "ATTRIBUTE_SCALE": "",
+    "ATTRIBUTE_SCALE": "Map_Scale",
     /* Tooltip content */
     "TOOLTIP_CONTENT": "",
     /* Download map link */
-    "ATTRIBUTE_DOWNLOAD_LINK": "",
+    "ATTRIBUTE_DOWNLOAD_LINK": "Downl_Link",
     /* Map citation <String> or <attribute field> */
-    "ATTRIBUTE_CITATION": "",
+    "ATTRIBUTE_CITATION": "Citation",
 
     /**************************************************************************
      *
